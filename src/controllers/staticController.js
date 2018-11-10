@@ -5,7 +5,7 @@ module.exports = {
     index(req, res, next){   // define function called index, which will contain a route handler for the / route in src/routes/static.js.
         res.render("static/index", {title: "Welcome to Bloccit"});
     },
-    index(req, res, next){   // define function called about, which will contain a route handler for the / route in src/routes/static.js.
+    about(req, res, next){   // define function called about, which will contain a route handler for the / route in src/routes/static.js.
         res.render("static/partials/about", {type: "About us"});
     }
   }
