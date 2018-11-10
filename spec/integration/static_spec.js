@@ -21,7 +21,18 @@ it("should return status code 200 and have 'Welcome to Bloccit' in the body of t
 
   });
 
+  describe("GET /about", () => {
 
+    it("should return status code 200 and have 'About us' in the body of the response", () => {
+          request.get(base + 'about', (err, res, body) => {
+            expect(res.statusCode).toBe(200);
+            expect(body).toContain("About us");
+            done();
+          });
+        });
+    
+      });
+      
 //#1
 describe("GET /marco", () => {
 

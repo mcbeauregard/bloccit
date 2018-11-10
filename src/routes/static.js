@@ -7,6 +7,7 @@ const staticController = require("../controllers/staticController"); // imports 
 // The Router instance also defines methods for the other HTTP verbs, such as  POST and DELETE.
 // A route handler must complete the request so that the next function in the middleware chain can execute. 
 router.get("/", staticController.index);
+router.get("/about", staticController.about);
 
 router.get("/marco", (req, res, next) => {
   res.send("polo");
