@@ -82,4 +82,45 @@ describe("routes : topics", () => {
           );
         });
       });
+
+      describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
+
+        it("should render a view with the selected topic", (done) => {
+          request.get(`${base}${this.topic.id}`, (err, res, body) => { // make a request and pass in the ID of the topic we created in the beforeEach call.
+            expect(err).toBeNull();
+            expect(body).toContain("JS Frameworks"); // set the success code, include the view for the tile of the topic
+            done();
+          });
+        });
+   
+      });
+
+      describe("POST /topics/:id/destroy", () => {
+
+        it("should delete the topic with the associated ID", (done) => {
+   
+    //#1 returns all the record in the table (this is a Sequelize model)
+          Topic.all()
+          .then((topics) => {
+   
+    //#2  once returned, store the number of topics returned from the database...
+            const topicCountBeforeDelete = topics.length;
+            expect(topicCountBeforeDelete).toBe(1); // then set the expectation that there should only be one record.
+   
+    //#3 delete request
+            request.post(`${base}${this.topic.id}/destroy`, (err, res, body) => {
+              Topic.all() // get all the topics from the table...
+              .then((topics) => {
+                expect(err).toBeNull();
+                expect(topics.length).toBe(topicCountBeforeDelete - 1); // and make sure we reduced the number of topics by one. 
+                done();
+              })
+   
+            });
+          });
+   
+        });
+   
+      });
+
   });
