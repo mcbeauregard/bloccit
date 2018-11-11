@@ -10,7 +10,7 @@ module.exports = {
        }
      })
   },
-  
+
   new(req, res, next){
     res.render("topics/new");
   },
@@ -51,5 +51,29 @@ module.exports = {
             res.redirect(303, "/topics") // otherwise, it's a success and redirect to the /topics path.
           }
         });
-      }   
+      },
+    
+      edit(req, res, next){ // edit action
+        topicQueries.getTopic(req.params.id, (err, topic) => { // use the getTopic method to get the topic with matching ID.
+          if(err || topic == null){
+            res.redirect(404, "/");
+          } else {
+            res.render("topics/edit", {topic}); // otherwise, render edit view
+          }
+        });
+      },
+
+      update(req, res, next){ // update action
+
+        //#1 calls updateTopic and pass ID from the URL and body request, which contains the key-value pairs we want to update
+             topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
+        
+        //#2
+               if(err || topic == null){
+                 res.redirect(404, `/topics/${req.params.id}/edit`);
+               } else {
+                 res.redirect(`/topics/${topic.id}`);
+               }
+             });
+           }
 }

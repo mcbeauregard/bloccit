@@ -36,14 +36,33 @@ module.exports = {
     })
   },
   deleteTopic(id, callback){
-    return Topic.destroy({
-      where: {id}
+    return Topic.destroy({ // calls the destroy method on the Topic model.
+      where: {id} // look for topics where the ID matches the ID passed into the deleteTopic method.
     })
-    .then((topic) => {
-      callback(null, topic);
+    .then((topic) => {  // when successful, the callabck is passed to the then method for execution, deleting the topic. 
+      callback(null, topic); // inside it calls the callback passes into deleteTopic, with null and the topic that came from the database.
     })
     .catch((err) => {
       callback(err);
     })
+  },
+  updateTopic(id, updatedTopic, callback){
+    return Topic.findById(id)
+    .then((topic) => {
+      if(!topic){
+        return callback("Topic not found");
+      }
+
+//#1
+      topic.update(updatedTopic, {
+        fields: Object.keys(updatedTopic)
+      })
+      .then(() => {
+        callback(null, topic);
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    });
   }
 }
