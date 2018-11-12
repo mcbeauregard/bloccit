@@ -7,7 +7,7 @@ module.exports = {
     return Advertisement.all()
 
 //#2
-    .then((topics) => {
+    .then((advertisements) => {
       callback(null, advertisements);
     })
     .catch((err) => {
