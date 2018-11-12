@@ -6,7 +6,7 @@ describe("routes : advertisements", () => {
 
   describe("GET /advertisements", () => {
 
-    it("should return a status code 200", (done) => {
+    it("should return a status code 200 and advertisments", (done) => {
       request.get(base, (err, res, body) => {
         expect(res.statusCode).toBe(200);
         done();
