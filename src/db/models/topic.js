@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "topicId", // indicates what foreign key to use in the banner table.
       as: "banners",
     });
+    Topic.hasMany(models.Post, {
+      foreignKey: "topicId",
+      as: "posts"
+    });
   };
   return Topic;
 };
