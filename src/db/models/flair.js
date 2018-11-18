@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   var Flair = sequelize.define('Flair', {
 
 //#1 set title and body to not allow null
-    title: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    body: {
+    color: {
       type: DataTypes.STRING,
       allowNull: false
     },

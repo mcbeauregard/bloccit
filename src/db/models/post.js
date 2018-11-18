@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-
 //#2 set topicID in the model
     topicId: {
       type: DataTypes.INTEGER,
