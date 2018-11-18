@@ -70,9 +70,9 @@ module.exports = {
         
         //#2
                if(err || topic == null){
-                 res.redirect(404, `/topics/${req.params.id}/edit`);
+                 res.redirect(404, `/topics/${req.params.id}/edit`); // if error found, return 404 and redirect to edit view
                } else {
-                 res.redirect(`/topics/${topic.id}`);
+                 res.redirect(`/topics/${topic.id}`); // otherwise, render the updated SHOW view with the newly updated topic
                }
              });
            }
