@@ -24,7 +24,7 @@ describe("routes : flairs", () => {
 
         Flair.create({
           name: "Dog sledding",
-          color: "white",
+          color: "White",
           topicId: this.topic.id
         })
         .then((flair) => {
