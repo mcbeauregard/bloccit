@@ -4,7 +4,6 @@ const base = "http://localhost:3000/topics";
 
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
-const Post = require("../../src/db/models").Post;
 const Flair = require("../../src/db/models").Flair;
 
 describe("routes : flairs", () => {
@@ -16,8 +15,8 @@ describe("routes : flairs", () => {
     sequelize.sync({force: true}).then((res) => {
 
       Topic.create({
-        title: "Winter Games",
-        description: "Post your Winter Games stories."
+        title: "Winter Games, Whistler",
+        description: "Post your Winter Games ideas."
       })
       .then((topic) => {
         this.topic = topic;
@@ -56,18 +55,17 @@ describe("routes : flairs", () => {
        const options = {
         url: `${base}/${this.topic.id}/flairs/create`,
         form: {
-          name: "Dog sledding",
-          color: "White"
+          name: "Ice sculpting",
+          color: "Red"
         }
       };
       request.post(options,
         (err, res, body) => {
-
-          Flair.findOne({where: {name: "Dog sledding"}})
+          Flair.findOne({where: {name: "Ice sculpting"}})
           .then((flair) => {
             expect(flair).not.toBeNull();
-            expect(flair.name).toBe("Dog sledding");
-            expect(flair.color).toBe("White");
+            expect(flair.name).toBe("Ice sculpting");
+            expect(flair.color).toBe("Red");
             expect(flair.topicId).not.toBeNull();
             done();
           })
@@ -115,7 +113,6 @@ describe("routes : flairs", () => {
        request.get(`${base}/${this.topic.id}/flairs/${this.flair.id}/edit`, (err, res, body) => {
          expect(err).toBeNull();
          expect(body).toContain("Edit Flair");
-         expect(body).toContain("Dog Sledding");
          done();
        });
     });
@@ -127,8 +124,8 @@ describe("routes : flairs", () => {
             request.post({
                 url: `${base}/${this.topic.id}/flairs/${this.flair.id}/update`,
                 form: {
-                    name: "Dog sledding",
-                    color: "White"
+                    name: "Hockey",
+                    color: "Yellow"
                 }
             }, (err, res, body) => {
                 expect(res.statusCode).toBe(302);
@@ -140,7 +137,7 @@ describe("routes : flairs", () => {
             const options = {
                 url: `${base}/${this.topic.id}/flair/${this.flair.id}/update`,
                 form: {
-                    name: "Dog sledding"
+                    name: "Bob sled"
                     }
                 };
                 request.post(options,
@@ -152,7 +149,7 @@ describe("routes : flairs", () => {
                         where: {id: this.flair.id}
                     })
                 .then((flair) => {
-                    expect(flair.name).toBe("Dog sledding");
+                    expect(flair.name).toBe("Bob sled");
                     done();
            });
          });
