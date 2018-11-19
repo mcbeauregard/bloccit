@@ -16,7 +16,7 @@ describe("routes : flairs", () => {
 
       Topic.create({
         title: "Winter Games, Whistler",
-        description: "Post your Winter Games ideas."
+        description: "Post your Winter Games stories."
       })
       .then((topic) => {
         this.topic = topic;
@@ -137,7 +137,7 @@ describe("routes : flairs", () => {
             const options = {
                 url: `${base}/${this.topic.id}/flair/${this.flair.id}/update`,
                 form: {
-                    name: "Bob sled"
+                    name: "Dog sledding"
                     }
                 };
                 request.post(options,
@@ -149,7 +149,7 @@ describe("routes : flairs", () => {
                         where: {id: this.flair.id}
                     })
                 .then((flair) => {
-                    expect(flair.name).toBe("Bob sled");
+                    expect(flair.name).toBe("Dog sledding");
                     done();
            });
          });
