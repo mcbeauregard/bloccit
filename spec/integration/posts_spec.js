@@ -77,6 +77,30 @@ describe("routes : posts", () => {
         }
       );
     });
+
+    it("should not create a new post that fails validations", (done) => {
+      const options = {
+        url: `${base}/${this.topic.id}/posts/create`,
+        form: {
+          title: "a",
+          body: "b"
+        }
+      };
+
+      request.post(options,
+        (err, res, body) => {
+          Post.findOne({where: {title: "a"}})
+          .then((post) => {
+              expect(post).toBeNull();
+              done();
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          });
+        }
+      );
+    });
   });
 
   describe("GET /topics/:topicId/posts/:id", () => {
@@ -120,7 +144,7 @@ describe("routes : posts", () => {
     });
   });
 
-  describe("POST /topics/:topicId/posts/:id/update", () => {
+    describe("POST /topics/:topicId/posts/:id/update", () => {
 
     it("should return a status code 302", (done) => {
        request.post({
@@ -139,7 +163,8 @@ describe("routes : posts", () => {
          const options = {
            url: `${base}/${this.topic.id}/posts/${this.post.id}/update`,
            form: {
-             title: "Snowman Building Competition"
+             title: "Snowman Building Competition",
+             body: "I love watching them melt slowly."
            }
          };
          request.post(options,
