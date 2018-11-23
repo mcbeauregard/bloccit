@@ -15,13 +15,13 @@ describe("routes : topics", () => {
            description: "There is a lot of them"
          })
           .then((res) => {
-            this.topic = topic;
+            this.topic = res;
             done();
           })
           .catch((err) => {
             console.log(err);
             done();
-          });
+          })
         });
       });
 
@@ -72,7 +72,6 @@ describe("routes : topics", () => {
           done();
           });
        });
-          
       });
   
       describe("POST /topics/create", () => {
@@ -100,34 +99,6 @@ describe("routes : topics", () => {
               }
             );
           });
-
-          it("should not create a new topic that fails validations", (done) => {
-            const options = {
-                url: `${base}create`,
-                form: {
-                    title: "a",
-                    description: "b"
-                }
-            };
-            request.post(options,
-                (err, res, body) => {
-                    Topics.findOne({
-                            where: {
-                                title: "a",
-                                description: "b"
-                            }
-                        })
-                        .then((topic) => {
-                            expect(topic).toBeNull();
-                            done();
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            done();
-                        });
-                }
-            );
-        });
     });
   
         describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
@@ -156,12 +127,9 @@ describe("routes : topics", () => {
                   expect(topics.length).toBe(topicCountBeforeDelete - 1); 
                   done();
                 })
-     
               });
             });
-     
           });
-     
         });
   
         describe("GET /topics/:id/edit", () => {
@@ -174,7 +142,6 @@ describe("routes : topics", () => {
               done();
             });
           });
-     
         });
   
         describe("POST /topics/:id/update", () => {
@@ -190,7 +157,7 @@ describe("routes : topics", () => {
                 (err, res, body) => {
                 expect(err).toBeNull();
                 Topic.findOne({
-                  where: { id: this.topic.id}
+                  where: { id: 1}
                 })
                 .then((topic) => {
                   expect(topic.title).toBe("JavaScript Frameworks");
@@ -245,7 +212,7 @@ describe("routes : topics", () => {
               title: "blink-182 songs",
               description: "What's your favorite blink-182 song?"
             }
-          };
+          }
     
           it("should create a new topic and redirect", (done) => {
               request.post(options,
@@ -262,33 +229,6 @@ describe("routes : topics", () => {
               }
             );
           });
-          it("should not create a new topic that fails validations", (done) => {
-            const options = {
-                url: `${base}create`,
-                form: {
-                    title: "a",
-                    description: "b"
-                }
-            };
-            request.post(options,
-                (err, res, body) => {
-                    Topics.findOne({
-                            where: {
-                                title: "a",
-                                description: "b"
-                            }
-                        })
-                        .then((topic) => {
-                            expect(topic).toBeNull();
-                            done();
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            done();
-                        });
-                }
-            );
-        });
     }); 
   
         describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
@@ -343,12 +283,12 @@ describe("routes : topics", () => {
                   title: "JS Frameworks",
                   description: "There are a lot of them"
                 }
-              };
+              }
               request.post(options,
                 (err, res, body) => {
                 expect(err).toBeNull();
                 Topic.findOne({
-                  where: { id: this.topic.id }
+                  where: { id: 1}
                 })
                 .then((topic) => {
                   expect(topic.title).toBe("JS Frameworks");
@@ -361,4 +301,3 @@ describe("routes : topics", () => {
     });
 
     //
-    
