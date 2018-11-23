@@ -199,7 +199,7 @@ describe("routes : topics", () => {
       it("should render a new topic form to view", (done) => {
           request.get(`${base}new`, (err, res, body) => {
           expect(err).toBeNull();
-          expect(body).toContain("New Topic");
+          expect(body).toContain("Topics");
           done();
           });
        });
@@ -219,7 +219,8 @@ describe("routes : topics", () => {
               (err, res, body) => {
                 Topic.findOne({where: {title: "blink-182 songs"}})
                 .then((topic) => {
-                  expect(topic).toBeNull(); // no topic should be returned                  expect(topic.title).toBe("blink-182 songs");
+                  expect(topic.title).toBe("blink-182 songs");
+                  expect(topic.description).toBe("What's your favorite blink-182 song?");
                   done();
                 })
                 .catch((err) => {
