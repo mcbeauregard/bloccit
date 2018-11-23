@@ -15,7 +15,7 @@ describe("routes : topics", () => {
            description: "There is a lot of them"
          })
           .then((res) => {
-            this.topic = res;
+            this.topic = topic;
             done();
           })
           .catch((err) => {
@@ -100,7 +100,35 @@ describe("routes : topics", () => {
               }
             );
           });
+
+          it("should not create a new topic that fails validations", (done) => {
+            const options = {
+                url: `${base}create`,
+                form: {
+                    title: "a",
+                    description: "b"
+                }
+            };
+            request.post(options,
+                (err, res, body) => {
+                    Topics.findOne({
+                            where: {
+                                title: "a",
+                                description: "b"
+                            }
+                        })
+                        .then((topic) => {
+                            expect(topic).toBeNull();
+                            done();
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            done();
+                        });
+                }
+            );
         });
+    });
   
         describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
   
@@ -162,7 +190,7 @@ describe("routes : topics", () => {
                 (err, res, body) => {
                 expect(err).toBeNull();
                 Topic.findOne({
-                  where: { id:1 }
+                  where: { id: this.topic.id}
                 })
                 .then((topic) => {
                   expect(topic.title).toBe("JavaScript Frameworks");
@@ -187,7 +215,6 @@ describe("routes : topics", () => {
                done();
          });
     
-    // COPY AND PASTE THE OLD TESTS HERE
     describe("GET /topics", () => {
       it("should return all topics", (done) => {
                  request.get(base, (err, res, body) => {
@@ -205,7 +232,7 @@ describe("routes : topics", () => {
       it("should render a new topic form to view", (done) => {
           request.get(`${base}new`, (err, res, body) => {
           expect(err).toBeNull();
-          expect(body).toContain("Topics");
+          expect(body).toContain("New Topic");
           done();
           });
        });
@@ -235,7 +262,34 @@ describe("routes : topics", () => {
               }
             );
           });
+          it("should not create a new topic that fails validations", (done) => {
+            const options = {
+                url: `${base}create`,
+                form: {
+                    title: "a",
+                    description: "b"
+                }
+            };
+            request.post(options,
+                (err, res, body) => {
+                    Topics.findOne({
+                            where: {
+                                title: "a",
+                                description: "b"
+                            }
+                        })
+                        .then((topic) => {
+                            expect(topic).toBeNull();
+                            done();
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            done();
+                        });
+                }
+            );
         });
+    }); 
   
         describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
   
@@ -259,6 +313,7 @@ describe("routes : topics", () => {
                 request.post(`${base}${this.topic.id}/destroy`, (err, res, body) => {
                 Topic.all() // get all the topics from the table...
                 .then((topics) => {
+                  expect(err).toBeNull();
                   expect(topics.length).toBe(topicCountBeforeDelete); // and make sure we reduced the number of topics by one. 
                   done();
                 })
@@ -293,7 +348,7 @@ describe("routes : topics", () => {
                 (err, res, body) => {
                 expect(err).toBeNull();
                 Topic.findOne({
-                  where: { id:1 }
+                  where: { id: this.topic.id }
                 })
                 .then((topic) => {
                   expect(topic.title).toBe("JS Frameworks");
@@ -304,4 +359,6 @@ describe("routes : topics", () => {
         });
       });
     });
+
+    //
     
