@@ -24,11 +24,8 @@ module.exports = {
       },
 
       create(req, res, next){
-
-        // #1
             const authorized = new Authorizer(req.user).create();
        
-        // #2
             if(authorized) {
               let newTopic = {
                 title: req.body.title,
@@ -42,19 +39,13 @@ module.exports = {
                 }
               });
             } else {
-       
-        // #3
               req.flash("notice", "You are not authorized to do that.");
               res.redirect("/topics");
             }
           },
 
   show(req, res, next){
-
-    //#1 show action
          topicQueries.getTopic(req.params.id, (err, topic) => { // we use re.params because the information we need is in the URL, i.e. the value 5 is stored in ID. We must use ID to define this route.
-    
-    //#2 callback
            if(err || topic == null){  // check error or topic with no record
              res.redirect(404, "/"); //  if err or null is found, return a not found status code, and then redirect to root page.
            } else {

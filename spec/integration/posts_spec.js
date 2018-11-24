@@ -48,7 +48,7 @@ describe("routes : posts", () => {
 
   /// Guest user 
 
-  describe("admin user performing CRUD actions for Post", () => {
+  describe("guest user performing CRUD actions for Post", () => {
     beforeEach((done) => {  
         request.get({
           url: "http://localhost:3000/auth/fake",
@@ -76,7 +76,7 @@ describe("routes : posts", () => {
     it("should render a new post form", (done) => {
       request.get(`${base}/${this.topic.id}/posts/new`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Posts");
+        expect(body).toContain("Error");
         done();
       });
     });

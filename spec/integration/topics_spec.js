@@ -3,6 +3,7 @@ const server = require("../../src/server");
 const base = "http://localhost:3000/topics/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
+const Post = require('../../src/db/models').Post;
 const User = require("../../src/db/models").User;
 
 describe("routes : topics", () => {
@@ -68,7 +69,7 @@ describe("routes : topics", () => {
       it("should render a new topics", (done) => {
           request.get(`${base}new`, (err, res, body) => {
           expect(err).toBeNull();
-          expect(body).toContain("Topics");
+          expect(body).toContain("New Topic");
           done();
           });
        });
@@ -83,7 +84,7 @@ describe("routes : topics", () => {
             }
           };
     
-          it("should create a new topic and redirect", (done) => {
+          it("should  a new topic and redirect", (done) => {
             request.post(options,
               (err, res, body) => {
                 Topic.findOne({where: { 
