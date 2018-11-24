@@ -133,7 +133,6 @@ describe("routes : topics", () => {
         });
   
         describe("GET /topics/:id/edit", () => {
-  
           it("should render a view with an edit topic form", (done) => {
             request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
               expect(err).toBeNull();
@@ -219,7 +218,7 @@ describe("routes : topics", () => {
               (err, res, body) => {
                 Topic.findOne({where: {title: "blink-182 songs"}})
                 .then((topic) => {
-                  expect(topic.title).toBe("blink-182 songs");
+                  expect(topic.title).toBe("blink-182 songs"),
                   expect(topic.description).toBe("What's your favorite blink-182 song?");
                   done();
                 })

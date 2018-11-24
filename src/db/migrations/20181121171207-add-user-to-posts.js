@@ -19,3 +19,4 @@ module.exports = {
     return queryInterface.removeColumn("Users", "role");
   }
 };
+//
