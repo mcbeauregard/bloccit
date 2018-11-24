@@ -13,37 +13,34 @@ describe("Post", () => {
     sequelize.sync({force: true}).then((res) => {
       User.create({
         email: "starman@tesla.com",
-        password: "Trekkie4lyfe"
+        password: "Trekkie4lyfe",
       })
-      .then((user) => {
-        this.user = user;
-
+      .then( user => {
+        this.user = user; //store the user
         Topic.create({
-          title: "Winter Games",
-          description: "Post your Winter Games stories.",
+          title: "Expeditions to Alpha Centauri",
+          description: "A compilation of reports.",
           posts: [{
-            title: "Snowball Fighting",
-            body: "So much snow!",
+            title: "My first visit to Proxima Centauri b",
+            body: "I saw some rocks.",
             userId: this.user.id
           }]
         }, {
           include: {
-           model: Post,
-           as: "posts"
+            model: Post,
+            as: "posts",
           }
         })
-        .then((topic) => {
-          this.topic = topic;
-          this.post = topic.posts[0];
+        .then( topic => {
+          this.topic = topic; //store the topic
+          this.post = topic.posts[0]; //store the post
           done();
         })
       })
     });
-
   });
 
     describe("#create()", () => {
-    // this is a test for our create method of our post model
     it("should create a post object with a title, body, and assigned topic and user", (done) => {        //#1 creates post & associates it with topic id
                Post.create({
                  title: "Pros of Cryosleep during the long journey",
@@ -52,8 +49,6 @@ describe("Post", () => {
                  userId: this.user.id
                })
                .then((post) => {
-        
-        //#2 ensures post saved successfully
                  expect(post.title).toBe("Pros of Cryosleep during the long journey");
                  expect(post.body).toBe("1. Not having to answer the 'are we there yet?' question.");
                  expect(post.topicId).toBe(this.topic.id);
@@ -117,7 +112,7 @@ describe("Post", () => {
    
       });
 
-       describe("#setUser()", () => {
+    describe("#setUser()", () => {
 
      it("should associate a post and a user together", (done) => {
 
@@ -154,43 +149,4 @@ describe("Post", () => {
      });
 
    });
-  
-   describe("#setUser()", () => {
-
-    it("should associate a post and a user together", (done) => {
-
-      User.create({
-        email: "ada@example.com",
-        password: "password"
-      })
-      .then((newUser) => {
-
-        expect(this.post.userId).toBe(this.user.id);
-
-        this.post.setUser(newUser)
-        .then((post) => {
-
-          expect(this.post.userId).toBe(newUser.id);
-          done();
-
-        });
-      })
-    });
-
-  });
-
-  describe("#getUser()", () => {
-
-    it("should return the associated topic", (done) => {
-
-      this.post.getUser()
-      .then((associatedUser) => {
-        expect(associatedUser.email).toBe("starman@tesla.com");
-        done();
-      });
-
-    });
-
-  });
-
   });

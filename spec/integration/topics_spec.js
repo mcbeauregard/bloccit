@@ -25,11 +25,9 @@ describe("routes : topics", () => {
         });
       });
 
-  // #1: define the admin user context
+  // ADMIN
   describe("admin user performing CRUD actions for Topic", () => {
 
-    // #2: // before each test in admin user context, send an authentication request
-           // to a route we will create to mock an authentication request
          beforeEach((done) => {
            User.create({
              email: "admin@example.com",
@@ -37,10 +35,10 @@ describe("routes : topics", () => {
              role: "admin"
            })
            .then((user) => {
-             request.get({         // mock authentication
+             request.get({         
                url: "http://localhost:3000/auth/fake",
                form: {
-                 role: user.role,     // mock authenticate as admin user
+                 role: user.role,    
                  userId: user.id,
                  email: user.email
                }
@@ -172,11 +170,11 @@ describe("routes : topics", () => {
           });
         });
     });
+    // END ADMIN
     
-     // #3: define the member user context
+    // MEMBER
        describe("member user performing CRUD actions for Topic", () => {
     
-     // #4: Send mock request and authenticate as a member user
          beforeEach((done) => {
            request.get({
              url: "http://localhost:3000/auth/fake",
@@ -187,7 +185,6 @@ describe("routes : topics", () => {
                done();
          });
     
-    // COPY AND PASTE THE OLD TESTS HERE
     describe("GET /topics", () => {
       it("should return all topics", (done) => {
                  request.get(base, (err, res, body) => {
@@ -303,5 +300,7 @@ describe("routes : topics", () => {
           });
         });
       });
+
+      // END MEMBER
     });
     
