@@ -2,13 +2,11 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-
     return queryInterface.addColumn(
       "Posts",
       "userId",
       {
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: "Users",
@@ -16,8 +14,8 @@ module.exports = {
           as: "userId"
         },
       }
-    );
-  },
+    ); 
+ },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn("Posts", "userId");
