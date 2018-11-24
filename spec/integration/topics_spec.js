@@ -3,6 +3,7 @@ const server = require("../../src/server");
 const base = "http://localhost:3000/topics/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
+const Post = require('../../src/db/models').Post;
 const User = require("../../src/db/models").User;
 
 describe("routes : topics", () => {
@@ -21,13 +22,15 @@ describe("routes : topics", () => {
           .catch((err) => {
             console.log(err);
             done();
-          });
+          })
         });
       });
 
-  // ADMIN
+  // #1: define the admin user context
   describe("admin user performing CRUD actions for Topic", () => {
 
+    // #2: // before each test in admin user context, send an authentication request
+           // to a route we will create to mock an authentication request
          beforeEach((done) => {
            User.create({
              email: "admin@example.com",
@@ -35,10 +38,10 @@ describe("routes : topics", () => {
              role: "admin"
            })
            .then((user) => {
-             request.get({         
+             request.get({         // mock authentication
                url: "http://localhost:3000/auth/fake",
                form: {
-                 role: user.role,    
+                 role: user.role,     // mock authenticate as admin user
                  userId: user.id,
                  email: user.email
                }
@@ -63,14 +66,13 @@ describe("routes : topics", () => {
   
       describe("GET /topics/new", () => {
   
-      it("should render a new topic form", (done) => {
+      it("should render a new topics", (done) => {
           request.get(`${base}new`, (err, res, body) => {
           expect(err).toBeNull();
           expect(body).toContain("New Topic");
           done();
           });
        });
-          
       });
   
       describe("POST /topics/create", () => {
@@ -82,10 +84,11 @@ describe("routes : topics", () => {
             }
           };
     
-          it("should create a new topic and redirect", (done) => {
+          it("should  a new topic and redirect", (done) => {
             request.post(options,
               (err, res, body) => {
-                Topic.findOne({where: {title: "blink-182 songs"}})
+                Topic.findOne({where: {title: "blink-182 songs"}
+              })
                 .then((topic) => {
                   expect(topic.title).toBe("blink-182 songs");
                   expect(topic.description).toBe("What's your favorite blink-182 song?");
@@ -98,7 +101,7 @@ describe("routes : topics", () => {
               }
             );
           });
-        });
+    });
   
         describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
   
@@ -126,16 +129,12 @@ describe("routes : topics", () => {
                   expect(topics.length).toBe(topicCountBeforeDelete - 1); 
                   done();
                 })
-     
               });
             });
-     
           });
-     
         });
   
         describe("GET /topics/:id/edit", () => {
-  
           it("should render a view with an edit topic form", (done) => {
             request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
               expect(err).toBeNull();
@@ -144,7 +143,6 @@ describe("routes : topics", () => {
               done();
             });
           });
-     
         });
   
         describe("POST /topics/:id/update", () => {
@@ -160,7 +158,7 @@ describe("routes : topics", () => {
                 (err, res, body) => {
                 expect(err).toBeNull();
                 Topic.findOne({
-                  where: { id:1 }
+                  where: { id: 1}
                 })
                 .then((topic) => {
                   expect(topic.title).toBe("JavaScript Frameworks");
@@ -170,11 +168,11 @@ describe("routes : topics", () => {
           });
         });
     });
-    // END ADMIN
     
-    // MEMBER
+     // #3: define the member user context
        describe("member user performing CRUD actions for Topic", () => {
     
+     // #4: Send mock request and authenticate as a member user
          beforeEach((done) => {
            request.get({
              url: "http://localhost:3000/auth/fake",
@@ -215,14 +213,15 @@ describe("routes : topics", () => {
               title: "blink-182 songs",
               description: "What's your favorite blink-182 song?"
             }
-          };
+          }
     
           it("should create a new topic and redirect", (done) => {
               request.post(options,
               (err, res, body) => {
                 Topic.findOne({where: {title: "blink-182 songs"}})
                 .then((topic) => {
-                  expect(topic).toBeNull(); // no topic should be returned                  expect(topic.title).toBe("blink-182 songs");
+                  expect(topic.title).toBe("blink-182 songs"),
+                  expect(topic.description).toBe("What's your favorite blink-182 song?");
                   done();
                 })
                 .catch((err) => {
@@ -232,7 +231,7 @@ describe("routes : topics", () => {
               }
             );
           });
-        });
+    }); 
   
         describe("GET /topics/:id", () => { // semi-colon in the URI indicates that id is the URL parameter. An id is passed in the request.
   
@@ -256,6 +255,7 @@ describe("routes : topics", () => {
                 request.post(`${base}${this.topic.id}/destroy`, (err, res, body) => {
                 Topic.all() // get all the topics from the table...
                 .then((topics) => {
+                  expect(err).toBeNull();
                   expect(topics.length).toBe(topicCountBeforeDelete); // and make sure we reduced the number of topics by one. 
                   done();
                 })
@@ -265,11 +265,10 @@ describe("routes : topics", () => {
         });
   
         describe("GET /topics/:id/edit", () => {
-  
           it("should render a view with an edit topic form", (done) => {
             request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
               expect(err).toBeNull();
-              expect(body).toContain("Edit Topic");
+              expect(body).not.toContain("Edit Topic");
               expect(body).toContain("JS Frameworks");
               done();
             });
@@ -285,12 +284,12 @@ describe("routes : topics", () => {
                   title: "JS Frameworks",
                   description: "There are a lot of them"
                 }
-              };
+              }
               request.post(options,
                 (err, res, body) => {
                 expect(err).toBeNull();
                 Topic.findOne({
-                  where: { id:1 }
+                  where: { id: 1}
                 })
                 .then((topic) => {
                   expect(topic.title).toBe("JS Frameworks");
@@ -300,7 +299,6 @@ describe("routes : topics", () => {
           });
         });
       });
-
-      // END MEMBER
     });
-    
+
+    //
