@@ -1,39 +1,44 @@
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
+const User = require('../../src/db/models').User;
 
 describe("Post", () => {
 
   beforeEach((done) => {
-//#1 declares 2 variables to represent a topic and post for testing
     this.topic;
     this.post;
+    this.user;
     sequelize.sync({force: true}).then((res) => {
 
-//#2 creates topic
-      Topic.create({
-        title: "Expeditions to Alpha Centauri",
-        description: "A compilation of reports from recent visits to the star system."
-      })
-      .then((topic) => {
-        this.topic = topic;
-//#3 creates post
-        Post.create({
-          title: "My first visit to Proxima Centauri b",
-          body: "I saw some rocks.",
-          topicId: this.topic.id
+      User.create({
+        email: "starman@tesla.com",
+         password: "Trekkie4lyfe"
+       })
+       .then((user) => {
+         this.user = user; //store the user
+         Topic.create({
+          title: "Expeditions to Alpha Centauri",
+          description: "A compilation of reports from recent visits to the star system.",
+          posts: [{
+            title: "My first visit to Proxima Centauri b",
+            body: "I saw some rocks.",
+            userId: this.user.id
+          }]
+        }, {
+          include: {
+            model: Post,
+            as: "posts"
+          }
         })
-        .then((post) => {
-          this.post = post;
+        .then((topic) => {
+          this.topic = topic; //store the topic
+          this.post = topic.posts[0]; //store the post
           done();
-        });
+        })
       })
-      .catch((err) => {
-        console.log(err);
-        done();
-      });
     });
-});
+  });
 
     describe("#create()", () => {
     // this is a test for our create method of our post model
@@ -49,6 +54,8 @@ describe("Post", () => {
         //#2 ensures post saved successfully
                  expect(post.title).toBe("Pros of Cryosleep during the long journey");
                  expect(post.body).toBe("1. Not having to answer the 'are we there yet?' question.");
+                 expect(post.topicId).toBe(this.topic.id);
+                 expect(post.userId).toBe(this.user.id);
                  done();
         
                })
@@ -62,14 +69,8 @@ describe("Post", () => {
                 Post.create({
                   title: "Pros of Cryosleep during the long journey"
                 })
-                .then((post) => {
-           
-                 // the code in this block will not be evaluated since the validation error
-                 // will skip it. Instead, we'll catch the error in the catch block below
-                 // and set the expectations there
-           
+                .then((post) => {           
                   done();
-           
                 })
                 .catch((err) => {
            
@@ -115,4 +116,36 @@ describe("Post", () => {
    
       });
 
-  });
+      describe('#setUser()', () => {
+        
+        it('should associate a post and a user together', done => {
+          
+          User.create({
+            email: 'ada@example.com',
+            password: 'password',
+          }).then(newUser => {
+
+            expect(this.post.userId).toBe(this.user.id);
+            this.post.setUser(newUser)
+
+            .then(post => {
+              expect(this.post.userId).toBe(newUser.id);
+              done();
+            });
+          });
+        });
+      });
+    
+      describe('#getUser()', () => {
+
+        it('should return the associated topic', done => {
+
+          this.post.getUser()
+          .then(associatedUser => {
+            expect(associatedUser.email).toBe('starman@tesla.com');
+            done();
+          });
+        });
+      });
+    });
+  ///
