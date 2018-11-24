@@ -270,7 +270,7 @@ describe("routes : topics", () => {
           it("should render a view with an edit topic form", (done) => {
             request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
               expect(err).toBeNull();
-              expect(body).toContain("Edit Topic");
+              expect(body).not.toContain("Edit Topic");
               expect(body).toContain("JS Frameworks");
               done();
             });
