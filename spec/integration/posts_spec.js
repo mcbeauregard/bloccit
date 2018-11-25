@@ -89,6 +89,7 @@ describe("routes : posts", () => {
             Post.findOne({where: {title: "Watching snow melt"}})
             .then((post) => {
               expect(post).not.toBeNull();
+              expect(body).toContain("/users/sign_in");
               done();
             })
             .catch((err) => {
@@ -127,7 +128,8 @@ describe("routes : posts", () => {
        it("should render a view with an edit post form", (done) => {
          request.get(`${base}/${this.topic.id}/posts/${this.post.id}/edit`, (err, res, body) => {
            expect(err).toBeNull();
-           expect(body).toContain("Edit Post");
+           expect(body).not.toContain("Edit Post");
+           expect(body).not.toContain("Snowball Fighting");
            done();
          });
       });
