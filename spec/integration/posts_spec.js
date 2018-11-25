@@ -88,7 +88,7 @@ describe("routes : posts", () => {
   
             Post.findOne({where: {title: "Watching snow melt"}})
             .then((post) => {
-              expect(post).not.toBeNull();
+              expect(post).toBeNull();
               expect(body).toContain("/users/sign_in");
               done();
             })
