@@ -208,5 +208,204 @@ describe("signed in user performing CRUD actions for Comment", () => {
 
   }); 
 /// end of signed-in user
+
+/// Member (aka signed-in user) can't delete another member's comments
+describe("Member user performing CRUD actions for Comment", () => {
+
+    beforeEach((done) => {    
+        request.get({          
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: "member",
+          userId: this.user.id
+        }
+      },
+        (err, res, body) => {
+          done();
+        }
+      );
+    });
+
+    describe("POST /topics/:topicId/posts/:postId/comments/create", () => {
+
+        it("should create a new comment and redirect", (done) => {
+          const options = {
+            url: `${base}${this.topic.id}/posts/${this.post.id}/comments/create`,
+            form: {
+              body: "This comment is amazing!"
+            }
+          };
+          request.post(options,
+            (err, res, body) => {
+              Comment.findOne({where: {body: "This comment is amazing!"}})
+              .then((comment) => {
+                expect(comment).not.toBeNull();
+                expect(comment.body).toBe("This comment is amazing!");
+                expect(comment.id).not.toBeNull();
+                done();
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+            }
+          );
+        });
+      });
+  
+      describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
+  
+        it("should delete the comment with the associated ID", (done) => {
+          Comment.all()
+          .then((comments) => {
+            const commentCountBeforeDelete = comments.length;
+  
+            expect(commentCountBeforeDelete).toBe(1);
+  
+            request.post(
+             `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+              (err, res, body) => {
+              expect(res.statusCode).toBe(302);
+              Comment.all()
+              .then((comments) => {
+                expect(err).toBeNull();
+                expect(comments.length).toBe(commentCountBeforeDelete - 1);
+                done();
+              })
+  
+            });
+          })
+  
+        });
+  
+      });
+      
+describe("signed in but non owner user performing CRUD actions for Comment", () => {
+        beforeEach((done) => {
+          User.create({
+            email: "member@example.com",
+            password: "123456",
+            role: "member"
+          })
+          .then((user) => {
+            request.get({
+              url: "http://localhost:3000/auth/fake",
+              form: {
+                role: user.role,
+                userId: user.id,
+                email: user.email
+              }
+            },
+              (err,res,body)=>{
+                done();
+              }
+            );
+          });
+        });
+
+
+    describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
+        it("should delete the comment of another member", (done) => {
+            Comment.all()
+            .then((comments) => {
+              const commentCountBeforeDelete = comments.length;
+
+              expect(commentCountBeforeDelete).toBe(1);
+              request.post(
+               `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+                (err, res, body) => {
+                expect(res.statusCode).toBe(401);
+                Comment.all()
+                .then((comments) => {
+                  expect(err).toBeNull();
+                  expect(comments.length).toBe(commentCountBeforeDelete);
+                  done();
+                })
+    
+              });
+            })
+    
+          });
+    
+        });
+    
+      }); 
+/// end of member
+
+/// Admin can delete another member's comments
+describe("admin user performing CRUD actions for Comment", () => {
+
+    beforeEach((done) => {    // before each suite in this context
+      request.get({           // mock authentication
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: "admin",     // mock authenticate as member user
+          userId: this.user.id
+        }
+      },
+        (err, res, body) => {
+          done();
+        }
+      );
+    });
 });
 
+    describe("POST /topics/:topicId/posts/:postId/comments/create", () => {
+
+        it("should create a new comment and redirect", (done) => {
+          const options = {
+            url: `${base}${this.topic.id}/posts/${this.post.id}/comments/create`,
+            form: {
+              body: "This comment is amazing!"
+            }
+          };
+          request.post(options,
+            (err, res, body) => {
+              Comment.findOne({where: {body: "This comment is amazing!"}})
+              .then((comment) => {
+                expect(comment).not.toBeNull();
+                expect(comment.body).toBe("This comment is amazing!");
+                expect(comment.id).not.toBeNull();
+                done();
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+            }
+          );
+        });
+      });
+
+    describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
+        
+      it("should delete comment of another user", (done) => {
+        Comment.all()
+        .then((comments) => {
+          const commentCountBeforeDelete = comments.length;
+
+          expect(commentCountBeforeDelete).toBe(1);
+
+          request.post(
+           `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+            (err, res, body) => {
+            expect(res.statusCode).toBe(302);
+            Comment.all()
+            .then((comments) => {
+              expect(err).toBeNull();
+              expect(comments.length).toBe(commentCountBeforeDelete - 1);
+              done();
+            })
+
+          });
+        })
+
+      });
+
+    });
+
+  }); 
+
+/// end of admin 
+
+}); 
