@@ -19,11 +19,11 @@ describe("Post", () => {
         this.user = user;
 
         Topic.create({
-          title: "Winter Games",
-          description: "Post your Winter Games stories.",
+          title: "Expeditions to Alpha Centauri",
+          description: "A compilation of reports from recent visits to the star system.",
           posts: [{
-            title: "Snowball Fighting",
-            body: "So much snow!",
+            title: "My first visit to Proxima Centauri b",
+            body: "I saw some rocks.",
             userId: this.user.id
           }]
         }, {
@@ -84,40 +84,36 @@ describe("Post", () => {
 
            });
   
+    describe("#setTopic()", () => {
+        it("should associate a topic and a post together", (done) => {
 
-  describe("#setTopic()", () => {
-
-    it("should associate a topic and a post together", (done) => {
-      Topic.create({
-        title: "Challenges of interstellar travel",
-        description: "1. The Wi-Fi is terrible"
-      })
-      .then((newTopic) => {
-        expect(this.post.topicId).toBe(this.topic.id);
-        this.post.setTopic(newTopic)
-        .then((post) => {
-          expect(post.topicId).toBe(newTopic.id);
-          done();
+            Topic.create({
+                title: "Challenges of interstellar travel",
+                description: "1. The Wi-Fi is terrible"
+            })
+            .then((newTopic) => {
+                expect(this.post.topicId).toBe(this.topic.id);
+                this.post.setTopic(newTopic)
+                .then((post) => {
+                    expect(post.topicId).toBe(newTopic.id);
+                    done();
+                });
+            })
         });
-      })
-    });
     });
 
     describe("#getTopic()", () => {
-
         it("should return the associated topic", (done) => {
-   
-          this.post.getTopic()
-          .then((associatedTopic) => {
-            expect(associatedTopic.title).toBe("Expeditions to Alpha Centauri");
-            done();
-          });
-   
-        });
-   
-      });
 
-       describe("#setUser()", () => {
+            this.post.getTopic()
+            .then((associatedTopic) => {
+                expect(associatedTopic.title).toBe("Expeditions to Alpha Centauri");
+                done();
+            });
+        });
+    });
+
+   describe("#setUser()", () => {
 
      it("should associate a post and a user together", (done) => {
 
@@ -154,43 +150,6 @@ describe("Post", () => {
      });
 
    });
-  
-   describe("#setUser()", () => {
+});
 
-    it("should associate a post and a user together", (done) => {
-
-      User.create({
-        email: "ada@example.com",
-        password: "password"
-      })
-      .then((newUser) => {
-
-        expect(this.post.userId).toBe(this.user.id);
-
-        this.post.setUser(newUser)
-        .then((post) => {
-
-          expect(this.post.userId).toBe(newUser.id);
-          done();
-
-        });
-      })
-    });
-
-  });
-
-  describe("#getUser()", () => {
-
-    it("should return the associated topic", (done) => {
-
-      this.post.getUser()
-      .then((associatedUser) => {
-        expect(associatedUser.email).toBe("starman@tesla.com");
-        done();
-      });
-
-    });
-
-  });
-
-  });
+//
