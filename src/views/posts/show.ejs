@@ -13,6 +13,24 @@
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       <p><%= post.body %></p>
+      <section id="comment-form">
+
+          <!-- #1 only show form if user signed-in --> 
+             <% if(currentUser) { %>
+               <% include ../comments/new.ejs %>
+             <% } %>
+            </section>
+         
+          <!-- #2 list all comments -->
+            <section id="comment-list">
+             <% if(post.comments) { %>
+               <% post.comments.forEach((comment) => { %>
+         
+          <!-- #3 render comment -->
+                 <%- include("../comments/show.ejs", {comment}) %>
+               <% }) %>
+             <% } %>
+            </section>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
