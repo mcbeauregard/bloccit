@@ -1,8 +1,9 @@
-const sequelize = require("../../src/db/models/index").sequelize;
-const Topic = require("../../src/db/models").Topic;
-const Post = require("../../src/db/models").Post;
-const User = require("../../src/db/models").User;
+ const sequelize = require("../../src/db/models/index").sequelize;
+ const Topic = require("../../src/db/models").Topic;
+ const Post = require("../../src/db/models").Post;
+ const User = require("../../src/db/models").User;
 
+ describe ("Topic", () => {
    beforeEach((done) => {
      this.topic;
      this.post;
@@ -20,14 +21,12 @@ const User = require("../../src/db/models").User;
          Topic.create({
            title: "Expeditions to Alpha Centauri",
            description: "A compilation of reports from recent visits to the star system.",
-
            posts: [{
              title: "My first visit to Proxima Centauri b",
              body: "I saw some rocks.",
              userId: this.user.id
            }]
          }, {
-
            include: {
              model: Post,
              as: "posts"
@@ -40,4 +39,5 @@ const User = require("../../src/db/models").User;
          })
        })
      });
-    });
+   });
+ });

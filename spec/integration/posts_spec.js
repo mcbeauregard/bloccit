@@ -63,17 +63,18 @@ describe("routes : posts", () => {
         url: `${base}/${this.topic.id}/posts/create`,
         form: {
           title: "Watching snow melt",
-          body: "Without a doubt my favoriting things to do besides watching paint dry!"
+          body: "Without a doubt my favorite things to do besides watching paint dry!",
+          topicId: this.topic.id,
+          userId: this.user.id
         }
       };
       request.post(options,
         (err, res, body) => {
-
           Post.findOne({where: {title: "Watching snow melt"}})
           .then((post) => {
             expect(post).not.toBeNull();
             expect(post.title).toBe("Watching snow melt");
-            expect(post.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
+            expect(post.body).toBe("Without a doubt my favorite things to do besides watching paint dry!");
             expect(post.topicId).not.toBeNull();
             done();
           })
@@ -109,6 +110,8 @@ describe("routes : posts", () => {
       );
     });
   });
+
+
 
   describe("GET /topics/:topicId/posts/:id", () => {
 
