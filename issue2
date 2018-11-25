@@ -1,0 +1,128 @@
+
+> bloccit@1.0.0 test /Users/michellebeauregard/Desktop/Sites/bloc/bloccit
+> export NODE_ENV=test&& jasmine
+
+DEPRECATION: Setting throwOnExpectationFailure directly on Env is deprecated, please use the oneFailurePerSpec option in `configure`
+DEPRECATION: Setting randomizeTests directly is deprecated, please use the random option in `configure`
+Started
+server is listening for requests on port 3000
+FTypeError: Cannot read property 'title' of null
+    at Post.findOne.then (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/spec/integration/posts_spec.js:76:25)
+    at tryCatcher (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:512:31)
+    at Promise._settlePromise (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:694:18)
+    at _drainQueueStep (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:138:12)
+    at _drainQueue (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:131:9)
+    at Async._drainQueues (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:147:5)
+    at Immediate.Async.drainQueues (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:17:14)
+    at runCallback (timers.js:810:20)
+    at tryOnImmediate (timers.js:768:5)
+    at processImmediate [as _immediateCallback] (timers.js:745:5)
+F...F..............................
+
+Failures:
+1) routes : posts GET /topics/:topicId/posts/new should render a new post form
+  Message:
+    Expected '<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>Error</title>
+    </head>
+    <body>
+    <pre>Cannot GET /posts</pre>
+    </body>
+    </html>
+    ' to contain 'New Post'.
+  Stack:
+    Error: Expected '<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>Error</title>
+    </head>
+    <body>
+    <pre>Cannot GET /posts</pre>
+    </body>
+    </html>
+    ' to contain 'New Post'.
+        at <Jasmine>
+        at Request.request.get [as _callback] (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/spec/integration/posts_spec.js:54:22)
+        at Request.self.callback (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:186:22)
+        at emitTwo (events.js:126:13)
+        at Request.emit (events.js:214:7)
+        at Request.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:1163:10)
+        at emitOne (events.js:116:13)
+        at Request.emit (events.js:211:7)
+        at IncomingMessage.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:1085:12)
+        at Object.onceWrapper (events.js:313:30)
+        at emitNone (events.js:111:20)
+        at IncomingMessage.emit (events.js:208:7)
+        at endReadableNT (_stream_readable.js:1064:12)
+        at _combinedTickCallback (internal/process/next_tick.js:139:11)
+        at process._tickCallback (internal/process/next_tick.js:181:9)
+
+2) routes : posts POST /topics/:topicId/posts/create should create a new post and redirect
+  Message:
+    Expected null not to be null.
+  Stack:
+    Error: Expected null not to be null.
+        at <Jasmine>
+        at Post.findOne.then (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/spec/integration/posts_spec.js:75:30)
+        at tryCatcher (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/util.js:16:23)
+        at Promise._settlePromiseFromHandler (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:512:31)
+        at Promise._settlePromise (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:569:18)
+        at Promise._settlePromise0 (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:614:10)
+        at Promise._settlePromises (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:694:18)
+        at _drainQueueStep (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:138:12)
+        at _drainQueue (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:131:9)
+        at Async._drainQueues (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:147:5)
+        at Immediate.Async.drainQueues (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:17:14)
+        at runCallback (timers.js:810:20)
+        at tryOnImmediate (timers.js:768:5)
+        at processImmediate [as _immediateCallback] (timers.js:745:5)
+
+3) routes : posts GET /topics/:topicId/posts/:id/edit should render a view with an edit post form
+  Message:
+    Expected 'Not Found. Redirecting to /' to contain 'Edit Post'.
+  Stack:
+    Error: Expected 'Not Found. Redirecting to /' to contain 'Edit Post'.
+        at <Jasmine>
+        at Request.request.get [as _callback] (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/spec/integration/posts_spec.js:148:23)
+        at Request.self.callback (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:186:22)
+        at emitTwo (events.js:126:13)
+        at Request.emit (events.js:214:7)
+        at Request.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:1163:10)
+        at emitOne (events.js:116:13)
+        at Request.emit (events.js:211:7)
+        at IncomingMessage.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:1085:12)
+        at Object.onceWrapper (events.js:313:30)
+        at emitNone (events.js:111:20)
+        at IncomingMessage.emit (events.js:208:7)
+        at endReadableNT (_stream_readable.js:1064:12)
+        at _combinedTickCallback (internal/process/next_tick.js:139:11)
+        at process._tickCallback (internal/process/next_tick.js:181:9)
+  Message:
+    Expected 'Not Found. Redirecting to /' to contain 'Snowball Fighting'.
+  Stack:
+    Error: Expected 'Not Found. Redirecting to /' to contain 'Snowball Fighting'.
+        at <Jasmine>
+        at Request.request.get [as _callback] (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/spec/integration/posts_spec.js:149:23)
+        at Request.self.callback (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:186:22)
+        at emitTwo (events.js:126:13)
+        at Request.emit (events.js:214:7)
+        at Request.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:1163:10)
+        at emitOne (events.js:116:13)
+        at Request.emit (events.js:211:7)
+        at IncomingMessage.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/request/request.js:1085:12)
+        at Object.onceWrapper (events.js:313:30)
+        at emitNone (events.js:111:20)
+        at IncomingMessage.emit (events.js:208:7)
+        at endReadableNT (_stream_readable.js:1064:12)
+        at _combinedTickCallback (internal/process/next_tick.js:139:11)
+        at process._tickCallback (internal/process/next_tick.js:181:9)
+
+36 specs, 3 failures
+Finished in 3.304 seconds
