@@ -8,7 +8,9 @@
       <% include ../static/partials/navbar.ejs %>
 
       <h1>Topics</h1>
-
+      <% if(currentUser && currentUser.isAdmin()) { %>
+        <a href="/topics/<%= topic.id %>/posts/new" class="btn btn-success">New Post</a>
+        <% if(currentUser.isAdmin()) { %>
       <ul class="list-group">
 <!-- #1 -->
         <% topics.forEach((topic) => { %>
