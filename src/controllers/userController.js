@@ -8,6 +8,10 @@ module.exports = {
                password: req.body.password,
                passwordConfirmation: req.body.passwordConfirmation
              };
+             console.log("sign-in fail"); 
+             console.log('EMAIL:', req.body.email)
+            console.log('Password:', req.body.password)
+            console.log('PasswordConf:', req.body.passwordConfirmation)
              userQueries.createUser(newUser, (err, user) => {
                if(err){
                  req.flash("error", err);
