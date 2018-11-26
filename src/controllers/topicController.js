@@ -56,6 +56,7 @@ module.exports = {
     
     //#2 callback
            if(err || topic == null){  // check error or topic with no record
+             console.log(err);
              res.redirect(404, "/"); //  if err or null is found, return a not found status code, and then redirect to root page.
            } else {
              res.render("topics/show", {topic}); // otherwise, return the SHOW partial view and pass the topic record and render it.
