@@ -1,9 +1,7 @@
 'use strict';
 
- //#1 create faker module
- const faker = require("faker");
+const faker = require("faker");
 
-//#2 define array called topics and populate it with 10 objects
  let topics = [];
 
  for(let i = 1 ; i <= 15 ; i++){
@@ -27,7 +25,6 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-   // bulkInsert metod: is a QueryInterface class that is called and passes the table name, array of objects, which then builds records. 
    return queryInterface.bulkInsert("Topics", topics, {});
   },
 
