@@ -277,7 +277,7 @@ describe("Vote", () => {
 
     describe("#hasDownvoteFor()", () => {
 
-        it("should return true if user has an upvote for post", (done) => {
+        it("should return true if user has an downvote for post", (done) => {
         Vote.create({
             value: -1,
             userId: this.user.id,
