@@ -141,6 +141,7 @@ describe("routes : votes", () => {
           }
         );
       });
+      
     });
 
     describe("GET /topics/:topicId/posts/:postId/votes/downvote", () => {
@@ -173,7 +174,7 @@ describe("routes : votes", () => {
       });
     });
 
-  }); //end context for signed in user
-  
+  }); // end context for signed in user
+
   // end of test suites
 });

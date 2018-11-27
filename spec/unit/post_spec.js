@@ -2,6 +2,7 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
+const Vote = require("../../src/db/models").Vote;
 
 describe("Post", () => {
 
@@ -150,6 +151,28 @@ describe("Post", () => {
      });
 
    });
-});
+  
+  // Write a test for the getPoints method of the Post model.
+  describe("#getPoints()", () => {
 
-//
+    it("should count votes on a post, and return total votes", (done) => {
+      Vote.create({
+        value: 1,
+        userId: this.user.id,
+        postId: this.post.id
+      })
+      .then((votes) => {
+        this.post.getPoints()
+        .then((associatedPost) => {
+          expect(this.votes).toBe(1);
+          done();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
+  }); // end of getPoints
+
+}); // end of test suites

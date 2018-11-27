@@ -81,7 +81,7 @@ describe("Vote", () => {
             done();
           });
         });
- 
+
         it("should create a downvote on a post for a user", (done) => {
           Vote.create({
             value: -1,
@@ -99,23 +99,37 @@ describe("Vote", () => {
             done();
           });
         });
- 
-        it("should not create a vote without assigned post or user", (done) => {
+
+        it("should not create a vote with a value of anything other than 1 or -1", (done) => {
           Vote.create({
-            value: 1
+            value: 2,
+            postId: this.post.id,
+            userId: this.user.id
           })
           .then((vote) => {
             done();
           })
           .catch((err) => {
-            expect(err.message).toContain("Vote.userId cannot be null");
-            expect(err.message).toContain("Vote.postId cannot be null");
+            expect(err.message).toContain("Validation isIn on value failed");
             done();
- 
           })
         });
- 
-      });
+
+        it("should not create more than one vote per user for a given post", (done) => {
+            Vote.create({
+              value: 1,
+            })
+            .then((vote) => {
+              done();
+            })
+            .catch((err) => {
+              expect(err.message).toContain("Vote.userId cannot be null");
+              expect(err.message).toContain("Vote.postId cannot be null");
+              done();
+            })
+          });
+
+      }); // end of create
 
    describe("#setUser()", () => {
 
@@ -236,5 +250,52 @@ describe("Vote", () => {
       });
     });
 
-  });
-});
+  }); // end get post
+
+    describe("#hasUpvoteFor()", () => {
+
+        it("should return true if user has an upvote for post", (done) => {
+        Vote.create({
+            value: 1,
+            userId: this.user.id,
+            postId: this.post.id
+        })
+        .then((vote) => {
+            this.vote.postId.hasUpvoteFor()
+            .then((associatedPost) => {
+            expect(this.votes).toBe(true);
+            done();
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            done();
+        });
+        });
+
+    });
+
+    describe("#hasDownvoteFor()", () => {
+
+        it("should return true if user has an upvote for post", (done) => {
+        Vote.create({
+            value: -1,
+            userId: this.user.id,
+            postId: this.post.id
+        })
+        .then((vote) => {
+            this.vote.postId.hasUpvoteFor()
+            .then((associatedPost) => {
+                expect(this.votes).toBe(true);
+                done();
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            done();
+        });
+        });
+
+    });
+
+}); // end
