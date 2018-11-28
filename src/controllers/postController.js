@@ -6,17 +6,13 @@ module.exports = {
         res.render("posts/new", {topicId: req.params.topicId});
       },
 
-  create(req, res, next){
-    const authorized = new Authorizer(req.user).create();
-
-    if(authorized) {
-    let newPost= {
+  create(req, res, next) {
+    let newPost = {
       title: req.body.title,
       body: req.body.body,
       topicId: req.params.topicId,
-      userId: req.user.id
+      userId: req.user.id,
     };
-    console.log(req.body)
     postQueries.addPost(newPost, (err, post) => {
       if(err){
         res.redirect(500, "/posts/new");
@@ -24,10 +20,6 @@ module.exports = {
         res.redirect(303, `/topics/${newPost.topicId}/posts/${post.id}`);
       }
     });
-      } else {
-      req.flash("notice", "You are not authorized to do that.");
-      res.redirect("/topics");
-    }
   },
   
    show(req, res, next){
