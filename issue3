@@ -1,0 +1,79 @@
+server is listening for requests on port 3000
+{ SequelizeDatabaseError: column posts.userId does not exist
+    at Query.formatError (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/sequelize/lib/dialects/postgres/query.js:363:16)
+    at query.catch.err (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/sequelize/lib/dialects/postgres/query.js:86:18)
+    at tryCatcher (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:512:31)
+    at Promise._settlePromise (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/promise.js:690:18)
+    at _drainQueueStep (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:138:12)
+    at _drainQueue (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:131:9)
+    at Async._drainQueues (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:147:5)
+    at Immediate.Async.drainQueues (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/bluebird/js/release/async.js:17:14)
+    at runCallback (timers.js:810:20)
+    at tryOnImmediate (timers.js:768:5)
+    at processImmediate [as _immediateCallback] (timers.js:745:5)
+  name: 'SequelizeDatabaseError',
+  parent: 
+   { error: column posts.userId does not exist
+    at Connection.parseE (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/pg/lib/connection.js:545:11)
+    at Connection.parseMessage (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/pg/lib/connection.js:370:19)
+    at Socket.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/pg/lib/connection.js:113:22)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at addChunk (_stream_readable.js:263:12)
+    at readableAddChunk (_stream_readable.js:250:11)
+    at Socket.Readable.push (_stream_readable.js:208:10)
+    at TCP.onread (net.js:601:20)
+     name: 'error',
+     length: 111,
+     severity: 'ERROR',
+     code: '42703',
+     detail: undefined,
+     hint: undefined,
+     position: '236',
+     internalPosition: undefined,
+     internalQuery: undefined,
+     where: undefined,
+     schema: undefined,
+     table: undefined,
+     column: undefined,
+     dataType: undefined,
+     constraint: undefined,
+     file: 'parse_relation.c',
+     line: '3293',
+     routine: 'errorMissingColumn',
+     sql: 'SELECT "Topic"."id", "Topic"."title", "Topic"."description", "Topic"."createdAt", "Topic"."updatedAt", "posts"."id" AS "posts.id", "posts"."title" AS "posts.title", "posts"."body" AS "posts.body", "posts"."topicId" AS "posts.topicId", "posts"."userId" AS "posts.userId", "posts"."createdAt" AS "posts.createdAt", "posts"."updatedAt" AS "posts.updatedAt" FROM "Topics" AS "Topic" LEFT OUTER JOIN "Posts" AS "posts" ON "Topic"."id" = "posts"."topicId" WHERE "Topic"."id" = \'10\';' },
+  original: 
+   { error: column posts.userId does not exist
+    at Connection.parseE (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/pg/lib/connection.js:545:11)
+    at Connection.parseMessage (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/pg/lib/connection.js:370:19)
+    at Socket.<anonymous> (/Users/michellebeauregard/Desktop/Sites/bloc/bloccit/node_modules/pg/lib/connection.js:113:22)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at addChunk (_stream_readable.js:263:12)
+    at readableAddChunk (_stream_readable.js:250:11)
+    at Socket.Readable.push (_stream_readable.js:208:10)
+    at TCP.onread (net.js:601:20)
+     name: 'error',
+     length: 111,
+     severity: 'ERROR',
+     code: '42703',
+     detail: undefined,
+     hint: undefined,
+     position: '236',
+     internalPosition: undefined,
+     internalQuery: undefined,
+     where: undefined,
+     schema: undefined,
+     table: undefined,
+     column: undefined,
+     dataType: undefined,
+     constraint: undefined,
+     file: 'parse_relation.c',
+     line: '3293',
+     routine: 'errorMissingColumn',
+     sql: 'SELECT "Topic"."id", "Topic"."title", "Topic"."description", "Topic"."createdAt", "Topic"."updatedAt", "posts"."id" AS "posts.id", "posts"."title" AS "posts.title", "posts"."body" AS "posts.body", "posts"."topicId" AS "posts.topicId", "posts"."userId" AS "posts.userId", "posts"."createdAt" AS "posts.createdAt", "posts"."updatedAt" AS "posts.updatedAt" FROM "Topics" AS "Topic" LEFT OUTER JOIN "Posts" AS "posts" ON "Topic"."id" = "posts"."topicId" WHERE "Topic"."id" = \'10\';' },
+  sql: 'SELECT "Topic"."id", "Topic"."title", "Topic"."description", "Topic"."createdAt", "Topic"."updatedAt", "posts"."id" AS "posts.id", "posts"."title" AS "posts.title", "posts"."body" AS "posts.body", "posts"."topicId" AS "posts.topicId", "posts"."userId" AS "posts.userId", "posts"."createdAt" AS "posts.createdAt", "posts"."updatedAt" AS "posts.updatedAt" FROM "Topics" AS "Topic" LEFT OUTER JOIN "Posts" AS "posts" ON "Topic"."id" = "posts"."topicId" WHERE "Topic"."id" = \'10\';' }
+create method in postController fail
