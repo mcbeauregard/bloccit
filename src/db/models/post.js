@@ -47,17 +47,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "postId",
       as: "favorites"
     });
-
-       // code doesn't work.
-    //Post.afterCreate((post, callback) => {
-     // return models.Favorite.create({
-     //   userId: post.userId,
-     //   postId: post.id
-     // });
-    //});
-    
   };
-
+  
+ 
   Post.prototype.getFavoriteFor = function(userId){
     return this.favorites.find((favorite) => { return favorite.userId == userId });
   };
