@@ -50,11 +50,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   
   Post.afterCreate((post, callback) => {
-    return models.Favorite.create({
-      userId: post.userId,
-      postId: post.id
-    });
-  });
+    console.log("AFTERCREATE CALLED SUCCESSFULLY");
+  }); 
 
   Post.prototype.getFavoriteFor = function(userId){
     return this.favorites.find((favorite) => { return favorite.userId == userId });
