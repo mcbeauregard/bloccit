@@ -48,10 +48,20 @@ module.exports = (sequelize, DataTypes) => {
       as: "favorites"
     });
 
-    Post.afterCreate((post, callback) => {
-      return models.Favorite.create({
+        // code doesn't work.
+    //Post.afterCreate((post, callback) => {
+     // return models.Favorite.create({
+     //   userId: post.userId,
+     //   postId: post.id
+     // });
+    //});
+    //
+
+    Post.afterCreate( (post, callback) => {
+      return models.Vote.create({
         userId: post.userId,
-        postId: post.id
+        postId: post.id,
+        value: 1,
       });
     });
   };
@@ -69,5 +79,13 @@ module.exports = (sequelize, DataTypes) => {
           .reduce((prev, next) => { return prev + next });
       };
 
+  Post.addScope("lastFiveFor", (userId) => {
+     return {
+       where: { userId: userId},
+       limit: 5,
+       order: [["createdAt", "DESC"]]
+     }
+   });
+   
   return Post;
 };
