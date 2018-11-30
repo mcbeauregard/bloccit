@@ -47,6 +47,16 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "postId",
       as: "favorites"
     });
+
+        // code doesn't work.
+    //Post.afterCreate((post, callback) => {
+     // return models.Favorite.create({
+     //   userId: post.userId,
+     //   postId: post.id
+     // });
+    //});
+    //
+
   };
   
  
@@ -63,5 +73,13 @@ module.exports = (sequelize, DataTypes) => {
           .reduce((prev, next) => { return prev + next });
       };
 
+  Post.addScope("lastFiveFor", (userId) => {
+     return {
+       where: { userId: userId},
+       limit: 5,
+       order: [["createdAt", "DESC"]]
+     }
+   });
+   
   return Post;
 };
