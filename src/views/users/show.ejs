@@ -39,6 +39,18 @@
             <hr>
           <% }) %>
         <% } %>
+
+     <h2> Latest favorites</h2>
+        <% if(favorites) { %>
+          <% favorites.forEach((favorite) => { %>
+            <li>
+              <span>Post: </span><a href="/topics/<%= favorite.postId %>/posts/<%= favorite.postId %>">
+                <%= favorite.Post.title %>
+              </a>
+            </li>
+            <hr>
+          <% }) %>
+        <% } %>
       </ul>
     </main>
 
