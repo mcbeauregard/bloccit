@@ -153,7 +153,7 @@ describe("routes : users", () => {
    
           request.get(`${base}${this.user.id}`, (err, res, body) => {
             expect(body).toContain("Snowball Fighting");
-            expect(body).toContain("This comment is alright.")
+            expect(body).toContain("This comment is alright.");
             done();
           });
    
@@ -161,3 +161,5 @@ describe("routes : users", () => {
       });
    
 });
+
+//

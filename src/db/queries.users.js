@@ -40,22 +40,19 @@ module.exports = {
    
              Comment.scope({method: ["lastFiveFor", id]}).all()
              .then((comments) => { //get last five comments
-               result["comments"] = comments; // stores comments
-               callback(null, result);
-             })
-             Favorite.scope({method: ["allFavorite", id]}).all()
-             .then((favorites) => { //get all favorites
+              result["comments"] = comments; // stores comments
+              Favorite.scope({method: ["allFavorite", id]}).all()
+              .then((favorites) => { //get all favorites
                result["favorites"] = favorites; // stores favorites
                callback(null, result);
              })
-             .catch((err) => {
-               callback(err);
-             })
-           })
            .catch((err) => {
             callback(err);
           })
-         }
-       })
-     }
+          })
+         })
+       }
+     })
 }
+}
+//
