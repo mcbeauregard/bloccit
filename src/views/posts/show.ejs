@@ -3,6 +3,7 @@
   <head>
     <% include ../static/partials/head.ejs %>
   </head>
+
   <body>
     <% include ../static/partials/navbar.ejs %>
 
@@ -13,16 +14,21 @@
           <% if(currentUser) { %>
             <% include ../votes/voting.ejs %>
           <% } %>
-      <h1><%= post.title %></h1>
+         <h1><%= post.title %></h1>
       </div>
+      <% if(currentUser) { %>
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
         <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/destroy" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
+        <% } %>
+
         <% if(currentUser) { %>
           <% include ../favorites/favoriting.ejs %>
         <% } %>
+
       <p><%= post.body %></p>
+      
       <section id="comment-form">
 
           <!-- #1 only show form if user signed-in --> 
