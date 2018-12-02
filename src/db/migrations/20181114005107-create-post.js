@@ -40,3 +40,5 @@ module.exports = {
     return queryInterface.dropTable('Posts');
   }
 };
+
+// Dec 2

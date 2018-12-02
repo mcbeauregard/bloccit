@@ -22,3 +22,4 @@ module.exports = class PostPolicy extends ApplicationPolicy {
     return this.update();
   }
 }
+// Dec 2

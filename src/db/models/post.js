@@ -83,3 +83,4 @@ module.exports = (sequelize, DataTypes) => {
    
   return Post;
 };
+// Dec 2
