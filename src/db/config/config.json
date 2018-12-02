@@ -20,11 +20,11 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "POSTGRES_DB_URL",
+    "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false,
     "operatorsAliases": false,
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "POSTGRES_DB_URL"
   }
 }
