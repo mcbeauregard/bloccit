@@ -2,18 +2,24 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
+
     return queryInterface.addColumn(
-      "Users",
-      "role",
-      {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: "member"
-      }
-    );
+       "Posts",
+       "userId",
+       {
+         type: Sequelize.INTEGER,
+         onDelete: "CASCADE",
+         allowNull: false,
+         references: {
+           model: "Users",
+           key: "id",
+           as: "userId"
+         },
+       }
+     ); 
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn("Users", "role");
+    return queryInterface.removeColumn("Posts", "userId");
   }
 };
